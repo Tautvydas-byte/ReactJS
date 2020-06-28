@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 import DishDetail from './DishdetailComponent';
 import Header from './HeaderComponent';
 import { DISHES } from './shared/dishes';
@@ -46,6 +47,8 @@ const DishWithId= ({match}) => {
         <Header/>     
         <Switch>
               <Route path="/home" component={HomePage} />
+              <Route exact path="/aboutus" component={()=> <About leaders={this.state.leaders}/>}
+              /*component nes about yra su props leaderiu vardai, todel reikia ir juos paimti, todel netink tiesiog  component={About} *//> 
               <Route exact path="/menu" component={() => <Menu dishes={this.state.dishes} />} />
               <Route path="/menu/:dishId" component={DishWithId}/>
               <Route exact path="/contactus" component={Contact}/>
