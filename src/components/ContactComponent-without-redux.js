@@ -1,94 +1,100 @@
-import React, {Component} from 'react';
-import {BreadcrumbItem, Breadcrumb, Button, Form, FormGroup, Label, Input, Col, FormFeedback} from 'reactstrap';
-import {Link} from 'react-router-dom';
-
+import React, {
+    Component
+} from 'react';
+import {
+    BreadcrumbItem,
+    Breadcrumb,
+    Button,
+    Form,
+    FormGroup,
+    Label,
+    Input,
+    Col,
+    FormFeedback
+} from 'reactstrap';
+import {
+    Link
+} from 'react-router-dom';
 class Contact extends Component {
-    
-    constructor(props){
+    constructor(props) {
         super(props);
-
-        this.state={
-            firstname:'',
-            lastname:'',
-            telnum:'',
-            email:'',
-            agree:false,
-            contactType:'Tel.',
-            message:'',
-            touched:{
+        this.state = {
+            firstname: '',
+            lastname: '',
+            telnum: '',
+            email: '',
+            agree: false,
+            contactType: 'Tel.',
+            message: '',
+            touched: {
                 firstname: false,
                 lastname: false,
                 telnum: false,
-                email:false
+                email: false
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
     }
-    handleInputChange(event){
+    handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
         this.setState({
             [name]: value
-          });
+        });
     }
     handleSubmit(event) {
         console.log('Current State is: ' + JSON.stringify(this.state));
         alert('Current State is: ' + JSON.stringify(this.state));
         event.preventDefault();
     }
-
-    handleBlur=(field)=>(evt)=>{
+    handleBlur = (field) => (evt) => {
         this.setState({
-            touched:{...this.state.touched, [field]:true}
+            touched: {
+                ...this.state.touched,
+                [field]: true
+            }
         })
     }
-
-    validate(firstname, lastname, telnum,email) {
+    validate(firstname, lastname, telnum, email) {
         const errors = {
-            firstname:'',
-            lastname:'',
-            telnum:'',
-            email:''
+            firstname: '',
+            lastname: '',
+            telnum: '',
+            email: ''
         };
-
-        if(this.state.touched.firstname && firstname.length<3)//error message jei per mazai raidziu
+        if (this.state.touched.firstname && firstname.length < 3) //error message jei per mazai raidziu
         {
             errors.firstname = 'First Name shppuld be >=3 characters';
-        }//jei per daug
-        else if(this.state.touched.firstname && firstname.length> 10){
+        } //jei per daug
+        else if (this.state.touched.firstname && firstname.length > 10) {
             errors.firstname = 'First Name shppuld be <=10 characters';
         }
-        if(this.state.touched.lastname && lastname.length<3)//error message jei per mazai raidziu
+        if (this.state.touched.lastname && lastname.length < 3) //error message jei per mazai raidziu
         {
             errors.lastname = 'Last Name shppuld be >=3 characters';
-        }//jei per daug
-        else if(this.state.touched.lastname && lastname.length> 10){
+        } //jei per daug
+        else if (this.state.touched.lastname && lastname.length > 10) {
             errors.lastname = 'Last Name shppuld be <=10 characters';
         }
-
         //telefono nr
-        const reg=/^\d+$/;//Regex tipo nurodo kad visi turi buti skaiciai
-        if(this.state.touched.telnum && !reg.test(telnum)){/*testina ar tik skaiciai*/
-            errors.telnum ="Tel. number should contain only numbers";
+        const reg = /^\d+$/; //Regex tipo nurodo kad visi turi buti skaiciai
+        if (this.state.touched.telnum && !reg.test(telnum)) {
+            /*testina ar tik skaiciai*/
+            errors.telnum = "Tel. number should contain only numbers";
         }
-        if(this.state.touched.email && email.split('').filter(x=>x ==='@').length !==1)
-        { /*testina ar bent vienas is simboliu yra @ simbolis*/
-            errors.email ="Email should contain a @";
+        if (this.state.touched.email && email.split('').filter(x => x === '@').length !== 1) {
+            /*testina ar bent vienas is simboliu yra @ simbolis*/
+            errors.email = "Email should contain a @";
         }
-
         return errors;
-
     }
-    
-    render(){
+    render() {
         //kvieciam funkcija
-        const errors = this.validate(this.state.firstname,this.state.lastname,this.state.telnum,this.state.email);
-        
-        return(
+        const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
+        return (
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
@@ -224,5 +230,4 @@ class Contact extends Component {
         );
     }
 }
-
 export default Contact;

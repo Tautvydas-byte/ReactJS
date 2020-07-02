@@ -1,10 +1,19 @@
 import React from 'react';
 //import {RenderCard} from 'react-router-dom';
-import {Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle} from 'reactstrap';
+import {
+    Card,
+    CardImg,
+    CardText,
+    CardBody,
+    CardTitle,
+    CardSubtitle
+} from 'reactstrap';
 
-function RenderCard({item}){
-  return(
-    <Card>
+function RenderCard({
+    item
+}) {
+    return (
+        <Card>
       <CardImg src={item.image} alt={item.name}/>
       <CardBody>
         <CardTitle>{item.name}</CardTitle>
@@ -12,12 +21,12 @@ function RenderCard({item}){
         <CardText>{item.description}</CardText>
       </CardBody>
     </Card>
-  );
+    );
 }
 
 function Home(props) {
-    return(
-      <div className="container">
+    return (
+        <div className="container">
         <div className="row align-items-start">
           <div className="col-12 col-md m-1">
             <RenderCard item={props.dish}/>
@@ -32,5 +41,4 @@ function Home(props) {
       </div>
     );
 }
-
-export default Home;  
+export default Home;

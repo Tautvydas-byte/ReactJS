@@ -1,42 +1,55 @@
-import React, { Component } from 'react';
-import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron, 
-    Button, Modal, ModalHeader, ModalBody, Form,FormGroup,Label, Input } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import React, {
+    Component
+} from 'react';
+import {
+    Nav,
+    Navbar,
+    NavbarBrand,
+    NavbarToggler,
+    Collapse,
+    NavItem,
+    Jumbotron,
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    Form,
+    FormGroup,
+    Label,
+    Input
+} from 'reactstrap';
+import {
+    NavLink
+} from 'react-router-dom';
 
 class Header extends Component {
     constructor(props) {
         super(props);
-        
-         this.state = {
+        this.state = {
             isNavOpen: false,
-            isModalOpen: false//kai ijungsi tinklapi modal neveiks, jei true tai iskart isoksta be mygtuko paspaudimo modal
+            isModalOpen: false //kai ijungsi tinklapi modal neveiks, jei true tai iskart isoksta be mygtuko paspaudimo modal
         };
-
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }
-
     toggleNav() {
         this.setState({
-          isNavOpen: !this.state.isNavOpen
+            isNavOpen: !this.state.isNavOpen
         });
     }
-
     toggleModal() {
         this.setState({
-          isModalOpen: !this.state.isModalOpen
+            isModalOpen: !this.state.isModalOpen
         });
-      }
-
-      handleLogin(event){
+    }
+    handleLogin(event) {
         this.toggleModal();
-        alert("Username: " + this.username.value + "Password " + this.password.value + " Remember " + this.remember.checked);
+        alert("Username: " + this.username.value + " Password " + this.password.value + " Remember " + this.remember.checked);
         event.preventDefault();
-      }
-
+    }
     render() {
-        return(
+        return (
             <React.Fragment>
                 <Navbar dark expand="md">
                     <div className="container">
@@ -71,7 +84,7 @@ class Header extends Component {
                             <Nav className='ml-auto' navbar>
                                 <NavItem>
                                     <Button outline onClick={this.toggleModal}/*kreipiasi i funkcija*/>
-                                        <span className="fa fa-sign-in fa-lg">Login</span>
+                                        <span className="fa fa-sign-in fa-lg"></span>Login
                                     </Button>
                                 </NavItem>
                             </Nav>
@@ -114,5 +127,4 @@ class Header extends Component {
         );
     }
 }
-
-export default Header; 
+export default Header;

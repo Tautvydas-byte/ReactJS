@@ -1,21 +1,35 @@
-import React, {Component} from 'react';
-import {BreadcrumbItem, Breadcrumb, Button, Form, FormGroup, Label, Input, Col, FormFeedback,Row} from 'reactstrap';
-import {Link} from 'react-router-dom';
-import {Control, LocalForm, Errors} from 'react-redux-form';
+import React, {
+    Component
+} from 'react';
+import {
+    BreadcrumbItem,
+    Breadcrumb,
+    Button,
+    Form,
+    FormGroup,
+    Label,
+    Input,
+    Col,
+    FormFeedback,
+    Row
+} from 'reactstrap';
+import {
+    Link
+} from 'react-router-dom';
+import {
+    Control,
+    LocalForm,
+    Errors
+} from 'react-redux-form';
 
-const required = (val) => val && val.length;//value > 0 tikrina
-const maxLength = (len) => (val) => !(val) || (val.length <= len);//
-const minLength = (len) => (val) => (val) && (val.length >= len);//
-const isNumber = (val) => !isNaN(Number(val));// tikrina kad tai butu numeris
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);//tikrina email ar tinkamai suvesta. {2,4} tai asd@fgh.COM nuo 2 iki max 4, po tasko simboliu
-
-
-
+const required = (val) => val && val.length; //value > 0 tikrina
+const maxLength = (len) => (val) => !(val) || (val.length <= len); //
+const minLength = (len) => (val) => (val) && (val.length >= len); //
+const isNumber = (val) => !isNaN(Number(val)); // tikrina kad tai butu numeris
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val); //tikrina email ar tinkamai suvesta. {2,4} tai asd@fgh.COM nuo 2 iki max 4, po tasko simboliu
 class Contact extends Component {
-    
-    constructor(props){
+    constructor(props) {
         super(props);
-
         /*this.state={ nereikia nes pakeisim i react-redux-form naudojima
             firstname:'',
             lastname:'',
@@ -31,7 +45,6 @@ class Contact extends Component {
                 email:false
             }
         }*/
-
         this.handleSubmit = this.handleSubmit.bind(this);
         //this.handleInputChange = this.handleInputChange.bind(this);nereikia nes pakeisim i react-redux-form naudojima
         //this.handleBlur = this.handleBlur.bind(this); nereikia nes pakeisim i react-redux-form naudojima
@@ -55,40 +68,38 @@ class Contact extends Component {
         alert('Current State is: ' + JSON.stringify(values));
         // event.preventDefault();
     }
-
     /*handleBlur=(field)=>(evt)=>{nereikia nes pakeisim i react-redux-form naudojima
         this.setState({
             touched:{...this.state.touched, [field]:true}
         })
     }*/
+    /* validate(firstname, lastname, telnum,email) {
+         const errors = {
+             firstname:'',
+             lastname:'',
+             telnum:'',
+             email:''
+         };
 
-   /* validate(firstname, lastname, telnum,email) {
-        const errors = {
-            firstname:'',
-            lastname:'',
-            telnum:'',
-            email:''
-        };
+         if(this.state.touched.firstname && firstname.length<3)//error message jei per mazai raidziu
+         {
+             errors.firstname = 'First Name shppuld be >=3 characters';
+         }//jei per daug
+         else if(this.state.touched.firstname && firstname.length> 10){
+             errors.firstname = 'First Name shppuld be <=10 characters';
+         }
+         if(this.state.touched.lastname && lastname.length<3)//error message jei per mazai raidziu
+         {
+             errors.lastname = 'Last Name shppuld be >=3 characters';
+         }//jei per daug
+         else if(this.state.touched.lastname && lastname.length> 10){
+             errors.lastname = 'Last Name shppuld be <=10 characters';
+         }
 
-        if(this.state.touched.firstname && firstname.length<3)//error message jei per mazai raidziu
-        {
-            errors.firstname = 'First Name shppuld be >=3 characters';
-        }//jei per daug
-        else if(this.state.touched.firstname && firstname.length> 10){
-            errors.firstname = 'First Name shppuld be <=10 characters';
-        }
-        if(this.state.touched.lastname && lastname.length<3)//error message jei per mazai raidziu
-        {
-            errors.lastname = 'Last Name shppuld be >=3 characters';
-        }//jei per daug
-        else if(this.state.touched.lastname && lastname.length> 10){
-            errors.lastname = 'Last Name shppuld be <=10 characters';
-        }
-
-        //telefono nr
-        const reg=/^\d+$/;//Regex tipo nurodo kad visi turi buti skaiciai
-        if(this.state.touched.telnum && !reg.test(telnum)){/*testina ar tik skaiciai*/
-            /* errors.telnum ="Tel. number should contain only numbers";
+         //telefono nr
+         const reg=/^\d+$/;//Regex tipo nurodo kad visi turi buti skaiciai
+         if(this.state.touched.telnum && !reg.test(telnum)){/*testina ar tik skaiciai*/
+    /* errors.telnum ="Tel. number should contain only numbers";
         }
         if(this.state.touched.email && email.split('').filter(x=>x ==='@').length !==1)
         { testina ar bent vienas is simboliu yra @ simbolis
@@ -97,12 +108,10 @@ class Contact extends Component {
 
         return errors;
     }*/
-    
-    render(){
+    render() {
         //kvieciam funkcija (nereikia nes pakeisim i react-redux-form naudojima)
-       // const errors = this.validate(this.state.firstname,this.state.lastname,this.state.telnum,this.state.email);
-        
-        return(
+        // const errors = this.validate(this.state.firstname,this.state.lastname,this.state.telnum,this.state.email);
+        return (
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
@@ -241,7 +250,7 @@ class Contact extends Component {
                                 <Label htmlfor="message" md={2}>Your feedback</Label>
                                 <Col md={10}>
                                     <Control.textarea model=".message" id="message" name="message" placeholder=" "
-                                    row="12" className="form-control"/>
+                                    row="6" className="form-control"/>
                                 </Col>
                             </Row>
 
@@ -259,5 +268,4 @@ class Contact extends Component {
         );
     }
 }
-
 export default Contact;
