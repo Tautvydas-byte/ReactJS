@@ -36,16 +36,16 @@ class CommentForm extends Component {
             isModalOpen: false //kai ijungsi tinklapi modal neveiks, jei true tai iskart isoksta be mygtuko paspaudimo modal
         };
         this.toggleModal = this.toggleModal.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     toggleModal() {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
     }
-    handleLogin(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+    handleSubmit(values) {
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author,values.comment);
     }
     render() {
         return (
@@ -59,7 +59,7 @@ class CommentForm extends Component {
                     >
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={this.handleLogin}>
+                        <LocalForm onSubmit={this.handleSubmit} >
                             
                             <Row className="form-group">
                                 <Label htmlFor="rating" md={12}>Rating</Label>
@@ -148,7 +148,9 @@ function RenderDish({
 }
 
 function RenderComments({
-    comments
+    comments,
+    addComment, 
+    dishId
 }) {
     if (comments == null) {
         return (<div></div>)
@@ -169,7 +171,7 @@ function RenderComments({
                 <ul className='list-unstyled'>
                     {cmnts} 
                 </ul>
-                <CommentForm/>
+                <CommentForm dishId={dishId} addComment={addComment}/*pasiekiami nes jau extractini kaip props*//>
             </div>
     )
 }
@@ -193,7 +195,10 @@ const DishDetail = (props) => {
                     </div>
                     <div className='row'>
                         <RenderDish dish={props.dish}/>
-                        <RenderComments comments={props.comments}/>
+                        <RenderComments comments={props.comments}
+                        addComment={props.addComment}//came as parameter
+                        dishId = {props.dish.id}//
+                        />
                     </div>
                 </div>
         );
