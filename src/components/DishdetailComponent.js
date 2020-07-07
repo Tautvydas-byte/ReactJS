@@ -25,6 +25,8 @@ import {
     Errors,
     LocalForm
 } from 'react-redux-form';
+import {Loading} from './LoadingComponent';
+
 const required = (val) => val && val.length; //value > 0 tikrina
 const maxLength = (len) => (val) => !(val) || (val.length <= len); //
 const minLength = (len) => (val) => (val) && (val.length >= len); //
@@ -176,8 +178,27 @@ function RenderComments({
     )
 }
 const DishDetail = (props) => {
+    if(props.isLoading){
+        return(//imported "Loading component"
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess){
+        return(//render "Error message"
+        <div className="container">
+            <div className="row">
+                <h4>{props.errMess}</h4>
+            </div>
+        </div>
+        );
+    }
+    
     //const dish=this.props.dish
-    if (props.dish != null) {
+    else if (props.dish != null) {
         // const dishItem = this.renderDish(this.props.dish)
         // const commentItem = this.renderComments(this.props.dish.comments)
         return (
@@ -202,7 +223,8 @@ const DishDetail = (props) => {
                     </div>
                 </div>
         );
-    } else {
+    } 
+    else {
         return (<div></div>);
     }
 }
