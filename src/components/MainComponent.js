@@ -18,6 +18,7 @@ import {
   connect
 } from 'react-redux';
 import {addComment, fetchDishes} from "../redux/ActionCreators";
+import {actions} from 'react-redux-form';
 
 const mapStateToProps /*access to reducer.js initialState*/ = state => {
   return {
@@ -43,7 +44,8 @@ So, going down to the connect we'll say mapDispatchToProps.
 So when you connect to that,
 then those that we define in the mapDispatchToProps will become available,
   so this addComment function will become available within my main component.*/
-  fetchDishes: () => {dispatch(fetchDishes())}//thunk, 
+  fetchDishes: () => {dispatch(fetchDishes())},//thunk, 
+  resetFeedbackForm: () => {dispatch(actions.reset('feedback'))}
 });
 
 class Main extends Component {
@@ -90,7 +92,7 @@ class Main extends Component {
           /*component nes about yra su props leaderiu vardai, todel reikia ir juos paimti, todel netink tiesiog  component={About} *//> 
           <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
           <Route path="/menu/:dishId" component={DishWithId}/>
-          <Route exact path="/contactus" component={Contact}/>
+          <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
           <Redirect to="/home" />
     </Switch>
     <Footer/>

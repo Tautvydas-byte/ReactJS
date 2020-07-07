@@ -1,6 +1,7 @@
 /*nebutinai taip daryti, bet jis taip pasirinko daryti su configureStore.js */
 import {createStore, combineReducers, applyMiddleware } from 'redux';
 //import { Reducer, initialState } from './reducer'
+import { createForms } from 'react-redux-form';//forms.js
 import { Dishes} from './dishes';
 import { Comments} from './comments';
 import { Promotions} from './promotions';
@@ -10,6 +11,8 @@ import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import {InitialFeedback} from './forms'
+
 
 export const ConfigureStore = () => {/*butonai reikia configuruoti  funkcija cretina redux store*/
     const store = createStore(
@@ -20,7 +23,10 @@ export const ConfigureStore = () => {/*butonai reikia configuruoti  funkcija cre
                 dishes: Dishes,
                 comments: Comments,
                 promotions: Promotions,
-                leaders: Leaders
+                leaders: Leaders,
+                ...createForms({
+                    feedback: InitialFeedback
+                })
         }),
         applyMiddleware(thunk, logger)//supplied into store as enhancers for our store 
     );

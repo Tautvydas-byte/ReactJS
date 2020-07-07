@@ -5,7 +5,7 @@ import {
     BreadcrumbItem,
     Breadcrumb,
     Button,
-    Form,
+    //Form,
     FormGroup,
     Label,
     Input,
@@ -18,8 +18,10 @@ import {
 } from 'react-router-dom';
 import {
     Control,
-    LocalForm,
-    Errors
+    //LocalForm,
+    Errors,
+    actions,
+    Form
 } from 'react-redux-form';
 
 const required = (val) => val && val.length; //value > 0 tikrina
@@ -67,6 +69,7 @@ class Contact extends Component {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
         // event.preventDefault();
+        this.props.resetFeedbackForm();
     }
     /*handleBlur=(field)=>(evt)=>{nereikia nes pakeisim i react-redux-form naudojima
         this.setState({
@@ -155,7 +158,7 @@ class Contact extends Component {
                     <h3>Send us your feedback</h3>
                     </div>
                     <div className="col-12 col-md-9">
-                        <LocalForm onSubmit={(values)=>this.handleSubmit(values)/*values ,nes redux-form ir passed handle automatically by the aplication*/}>
+                        <Form model="feedback" onSubmit={(values)=>this.handleSubmit(values)/*values ,nes redux-form ir passed handle automatically by the aplication*/}>
                             
                             <Row className="form-group">
                                 <Label htmlfor="firstname" md={2}>First name</Label>
@@ -261,7 +264,7 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>
