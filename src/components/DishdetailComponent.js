@@ -26,6 +26,7 @@ import {
     LocalForm
 } from 'react-redux-form';
 import {Loading} from './LoadingComponent';
+import {baseURL} from '../shared/baseURL';
 
 const required = (val) => val && val.length; //value > 0 tikrina
 const maxLength = (len) => (val) => !(val) || (val.length <= len); //
@@ -136,7 +137,7 @@ function RenderDish({
         return (
             <div className='col-12 col-md-5 m-1'>
                     <Card>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardImg width="100%" src={baseURL + dish.image} alt={dish.name} />
                         <CardBody>
                             <CardTitle>{dish.name}</CardTitle>
                             <CardText>{dish.description}</CardText>
