@@ -24,14 +24,30 @@ export const fetchDishes = () => (dispatch) => //shpuld be used fetch dishes. "=
         dispatch(addDishes(DISHES));
     }, 2000);//delay*/
 
+/*__receive a response from the server, but the reponse could be an error response from the server__*/
     return fetch(baseURL + 'dishes')//real communication with the server
+    .then(response => {//handling
+        if(response.ok){
+            return response;//jei ok tai response keliauja prie kito kreipimosi,
+        }
+        else{
+            var error = new Error('Error' + response.status + ': ' + response.statusText);//error object, status tai skaiciai kurie apib error
+            error.response = response;
+            throw error;//kai throw, tai catch'ins apatiniai
+        }
+    },/*____Second part when dont hear back ianything from the server__*/
+    error =>{
+        var errmess = new Error(error.message);//contains some info about what error is related to
+        throw errmess;
+    })
     .then(response => response.json())
-    .then(dishes => dispatch(addDishes(dishes)));/*That is it, so my fetchDishes is now set up to go and
+    .then(dishes => dispatch(addDishes(dishes)))/*That is it, so my fetchDishes is now set up to go and
     fetch the dishes and then, Once the dishes are obtained,
     then it'll push the dishes into
     the redux store here by dispatching that to the dishes.  */
-
+    .catch(error => dispatch(dishesFailed(error.message)));//catch throwed promises
 }
+/*_______________________________________________________________________*/
 
 export const dishesLoading = () => ({//going to return an action of the type
     type: ActionTypes.DISHES_LOADING//inform somebody that the dishes are beggining to load so you need to wait, to be loaded
@@ -51,11 +67,29 @@ export const fetchComments = () => (dispatch) => //shpuld be used fetch dishes. 
 //which is containing an inner function in here. 
 {
     return fetch(baseURL + 'comments')//real communication with the server
+
+    .then(response => {//handling
+        if(response.ok){
+            return response;//jei ok tai response keliauja prie kito kreipimosi,
+        }
+        else{
+            var error = new Error('Error' + response.status + ': ' + response.statusText);//error object, status tai skaiciai kurie apib error
+            error.response = response;
+            throw error;//kai throw, tai catch'ins apatiniai
+        }
+    },/*____Second part when dont hear back ianything from the server__*/
+    error =>{
+        var errmess = new Error(error.message);//contains some info about what error is related to
+        throw errmess;
+    })
+
     .then(response => response.json())
-    .then(comments => dispatch(addComments(comments)));/*That is it, so my fetchDishes is now set up to go and
+    .then(comments => dispatch(addComments(comments)))/*That is it, so my fetchDishes is now set up to go and
     fetch the dishes and then, Once the dishes are obtained,
     then it'll push the dishes into
     the redux store here by dispatching that to the dishes. */
+    .catch(error => dispatch(commentsFailed(error.message)));
+
 }
 
 export const commentsFailed = (errmess) => ({//going to return an action of the type
@@ -73,8 +107,25 @@ export const fetchPromos = () => (dispatch) =>
     dispatch(promosLoading(true));
 
     return fetch(baseURL + 'promotions')//real communication with the server
+
+    .then(response => {//handling
+        if(response.ok){
+            return response;//jei ok tai response keliauja prie kito kreipimosi,
+        }
+        else{
+            var error = new Error('Error' + response.status + ': ' + response.statusText);//error object, status tai skaiciai kurie apib error
+            error.response = response;
+            throw error;//kai throw, tai catch'ins apatiniai
+        }
+    },/*____Second part when dont hear back ianything from the server__*/
+    error =>{//outputkai neveikia serveris "Failed to fetch"
+        var errmess = new Error(error.message);//contains some info about what error is related to
+        throw errmess;
+    })
+
     .then(response => response.json())
-    .then(promos => dispatch(addPromos(promos)));
+    .then(promos => dispatch(addPromos(promos)))
+    .catch(error => dispatch(promosFailed(error.message)));
 
 }
 
