@@ -1,19 +1,61 @@
 import * as ActionTypes from './ActionTypes';
-import { DISHES } from '../shared/dishes';
-import { Dishes } from './dishes';
+//import { DISHES } from '../shared/dishes';
+//import { Dishes } from './dishes';
 import {baseURL} from '../shared/baseURL';
-import { Comments } from './comments';
+//import { Comments } from './comments';
 
-export const addComment = (dishId, rating, author, comment) => ({
+export const addComment = (comment) => ({
      //function create action object. Tai yra arrow function
     type: ActionTypes.ADD_COMMENT,//turi tureti tipa
-    payload: {//payload going to contain
+    payload: comment
+     /*{//payload going to contain
+        dishId: dishId,//defined action type
+        rating: rating,
+        author: author,
+        comment: comment }*/
+});
+
+export const postComment = (dishId, rating, author, comment) => (dispatch) => {
+    const newComment ={
         dishId: dishId,//defined action type
         rating: rating,
         author: author,
         comment: comment
-    }
-});
+    };
+
+    newComment.date = new Date().toISOString();
+
+    return fetch(baseURL + 'comments', {
+        method: "POST",
+        body: JSON.stringify(newComment),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })//request message defined
+    
+    .then(response => {//handling
+        if(response.ok){
+            return response;//jei ok tai response keliauja prie kito kreipimosi,
+        }
+        else{
+            var error = new Error('Error' + response.status + ': ' + response.statusText);//error object, status tai skaiciai kurie apib error
+            error.response = response;
+            throw error;//kai throw, tai catch'ins apatiniai
+        }
+    },/*____Second part when dont hear back ianything from the server__*/
+    error =>{
+        var errmess = new Error(error.message);//contains some info about what error is related to
+        throw errmess;
+    })
+    /*So, you will create a post message, send it to the server, and then when you receive the response,
+that response should be the updated comment,and that'll be pushed into the redux store by doing the dispatch here.
+If there is an error, you will just print the error inthe console log and then pop up an alert message for the user. */
+    .then(response => response.json())
+    .then(response => dispatch(addComment(response)))
+    .catch(error => {console.log('Post comments', error.message);
+     alert('Your comment could not be posted\nError:' + error.message)})
+}
 //-------------------DISHES----------------
 export const fetchDishes = () => (dispatch) => //shpuld be used fetch dishes. "=> (dispatch)" gonna be returned". tai yra THUNK function
 //which is containing an inner function in here. 
@@ -63,7 +105,7 @@ export const addDishes = (dishes) => ({
     payload:dishes
 });
 // --------------COMMENTS-----------------
-export const fetchComments = () => (dispatch) => //shpuld be used fetch dishes. "=> (dispatch)" gonna be returned". tai yra THUNK function
+export const fetchComments = () => (dispatch) =>  //shpuld be used fetch dishes. "=> (dispatch)" gonna be returned". tai yra THUNK function
 //which is containing an inner function in here. 
 {
     return fetch(baseURL + 'comments')//real communication with the server
@@ -118,7 +160,7 @@ export const fetchPromos = () => (dispatch) =>
             throw error;//kai throw, tai catch'ins apatiniai
         }
     },/*____Second part when dont hear back ianything from the server__*/
-    error =>{//outputkai neveikia serveris "Failed to fetch"
+    error =>{//output'ai neveikia serveris "Failed to fetch"
         var errmess = new Error(error.message);//contains some info about what error is related to
         throw errmess;
     })

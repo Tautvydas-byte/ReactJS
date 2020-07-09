@@ -6,11 +6,11 @@ import {
     Breadcrumb,
     Button,
     //Form,
-    FormGroup,
+    //FormGroup,
     Label,
-    Input,
+    //Input,
     Col,
-    FormFeedback,
+    //FormFeedback,
     Row
 } from 'reactstrap';
 import {
@@ -121,7 +121,7 @@ class Contact extends Component {
                         <BreadcrumbItem>
                             <Link to='/home'>Home</Link>
                         </BreadcrumbItem>
-                        <BreadcrumbItem active>Contact US</BreadcrumbItem>
+                        <BreadcrumbItem active>Contact us</BreadcrumbItem>
                     </Breadcrumb>
                     <div className="col-12">
                         <h3>Contact us</h3> <hr/>
