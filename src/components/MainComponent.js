@@ -19,7 +19,7 @@ import {
 } from 'react-redux';
 import {postComment, fetchDishes, fetchComments, fetchPromos} from "../redux/ActionCreators";
 import {actions} from 'react-redux-form';
-import {TransitionGroup, CSSTransition} from 'react-transition-group';//component animation
+import {TransitionGroup, CSSTransition} from 'react-transition-group';//component animation transition
 
 const mapStateToProps /*access to reducer.js initialState*/ = state => {
   return {
