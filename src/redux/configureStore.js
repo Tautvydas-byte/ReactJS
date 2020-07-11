@@ -14,7 +14,7 @@ import logger from 'redux-logger';
 import {InitialFeedback} from './forms'
 
 
-export const ConfigureStore = () => {/*butonai reikia configuruoti  funkcija cretina redux store*/
+export const ConfigureStore = () => {/*butonai reikia configuruoti  funkcija creatina redux store*/
     const store = createStore(
         //Reducer, // reducer /*sukuriami du parametrai*/
         //initialState, // our initialState

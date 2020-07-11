@@ -184,3 +184,91 @@ export const addPromos = (promos) => ({
     type:ActionTypes.ADD_PROMOS,
     payload:promos
 });
+
+/*-----------------LEADERS----------------------*/
+
+export const fetchLeaders = () => (dispatch) => 
+{
+    dispatch(leadersLoading(true));
+
+
+    return fetch(baseURL + 'leaders')//real communication with the server
+    .then(response => {//handling
+        if(response.ok){
+            return response;//jei ok tai response keliauja prie kito kreipimosi,
+        }
+        else{
+            var error = new Error('Error' + response.status + ': ' + response.statusText);//error object, status tai skaiciai kurie apib error
+            error.response = response;
+            throw error;//kai throw, tai catch'ins apatiniai
+        }
+    },/*____Second part when dont hear back anything from the server__*/
+    error =>{
+        var errmess = new Error(error.message);//contains some info about what error is related to
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(leaders => dispatch(addLeaders(leaders)))
+    .catch(error => dispatch(leadersFailed(error.message)));//catch throwed promises
+}
+/*_______________________________________________________________________*/
+
+export const leadersLoading = () => ({//going to return an action of the type
+    type: ActionTypes.LEADERS_LOADING//inform somebody that the leaders are beggining to load so you need to wait, to be loaded
+});
+
+export const leadersFailed = (errmess) => ({//going to return an action of the type
+    type:ActionTypes.LEADERS_FAILED,//
+    payload:errmess
+});
+
+export const addLeaders = (leaders) => ({
+    type:ActionTypes.ADD_LEADERS,
+    payload:leaders
+});
+
+//*----------------FEEDBACK----------------- */
+
+export const postFeedback = (firstname, lastname, telnum, email, agree, contactType,message) => (dispatch) => {
+   const newFeedback ={
+       firstname: firstname,//defined action type
+       lastname: lastname,
+       telnum: telnum,
+       email: email,
+       agree:agree,
+       contactType:contactType,
+       message:message
+   };
+
+   return fetch(baseURL + 'feedback', {
+       method: "POST",
+       body: JSON.stringify(newFeedback),
+       headers: {
+         "Content-Type": "application/json"
+       },
+       credentials: "same-origin"
+   })//request message defined
+   
+   .then(response => {//handling
+       if(response.ok){
+           return response;//jei ok tai response keliauja prie kito kreipimosi,
+       }
+       else{
+           var error = new Error('Error' + response.status + ': ' + response.statusText);//error object, status tai skaiciai kurie apib error
+           error.response = response;
+           throw error;//kai throw, tai catch'ins apatiniai
+       }
+   },/*____Second part when dont hear back anything from the server__*/
+   error =>{
+       var errmess = new Error(error.message);//contains some info about what error is related to
+       throw errmess;
+   })
+    .then(response => response.json())
+    .then(function(response){
+        alert('Thank you for your feedback! '+ JSON.stringify(response));
+        return console.log(response)
+    })
+    .catch(error => {console.log("post feedbacks", error.message);
+    alert("Your feedback could not be posted\nError: " + error.message);
+});
+};

@@ -29,6 +29,7 @@ const maxLength = (len) => (val) => !(val) || (val.length <= len); //
 const minLength = (len) => (val) => (val) && (val.length >= len); //
 const isNumber = (val) => !isNaN(Number(val)); // tikrina kad tai butu numeris
 const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val); //tikrina email ar tinkamai suvesta. {2,4} tai asd@fgh.COM nuo 2 iki max 4, po tasko simboliu
+
 class Contact extends Component {
     constructor(props) {
         super(props);
@@ -66,10 +67,19 @@ class Contact extends Component {
         event.preventDefault();
     }*/
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        //console.log('Current State is: ' + JSON.stringify(values));
+        //alert('Current State is: ' + JSON.stringify(values));
         // event.preventDefault();
         this.props.resetFeedbackForm();
+        this.props.postFeedback(
+            values.firstname,
+            values.lastname,
+            values.telnum,
+            values.email,
+            values.agree,
+            values.contactType,
+            values.message
+          );
     }
     /*handleBlur=(field)=>(evt)=>{nereikia nes pakeisim i react-redux-form naudojima
         this.setState({
@@ -155,10 +165,10 @@ class Contact extends Component {
                 </div>
                 <div className="row row-content">
                     <div className="col-12">
-                    <h3>Send us your feedback</h3>
+                    <h3>Send us your feedback</h3><br/>
                     </div>
                     <div className="col-12 col-md-9">
-                        <Form model="feedback" onSubmit={(values)=>this.handleSubmit(values)/*values ,nes redux-form ir passed handle automatically by the aplication*/}>
+                        <Form model="feedback" onSubmit={values=>this.handleSubmit(values)/*values ,nes redux-form ir passed handle automatically by the aplication*/}>
                             
                             <Row className="form-group">
                                 <Label htmlfor="firstname" md={2}>First name</Label>

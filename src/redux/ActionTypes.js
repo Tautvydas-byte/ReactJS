@@ -1,5 +1,5 @@
 export const ADD_COMMENT = 'ADD_COMMENT';
-export const DISHES_LOADING = 'DISHES_LOADING';//dishes are fitch perhaps from serves
+export const DISHES_LOADING = 'DISHES_LOADING';//dishes are fitch perhaps from servers
 export const DISHES_FAILED = 'DISHES_FAILED';//failed to fetch the dishes info from a server
 export const ADD_DISHES = 'ADD_DISHES';//add the dishes into your store
 
@@ -11,4 +11,8 @@ the comments would have already been fetched in.So that's why I don't have a spe
 export const PROMOS_LOADING = 'PROMOS_LOADING';
 export const ADD_PROMOS = 'ADD_PROMOS';
 export const PROMOS_FAILED = 'PROMOS_FAILED';
+
+export const LEADERS_LOADING = 'LEADERS_LOADING';//
+export const LEADERS_FAILED = 'LEADERS_FAILED';//
+export const ADD_LEADERS = 'ADD_LEADERS';//
 

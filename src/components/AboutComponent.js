@@ -10,16 +10,21 @@ import {
 import {
     Link
 } from 'react-router-dom';
+import {baseURL} from '../shared/baseURL';
+import { Fade, Stagger } from 'react-animation-components';//animation component
+
 
 function About(props) {
     function RenderLeader({
         leader
     }) {
         return (
+            <Stagger in>
+            <Fade in>
             <div  key={leader.id} className='col-12 md-5'>
                 <Media tag="li">
                     <Media /*left middle*/ >
-                        <Media object src={leader.image} alt={leader.name} />
+                        <Media object src={baseURL + leader.image} alt={leader.name} />
                     </Media>
                     <Media body className='col-12'>
                         <Media /*heading*/><h4>{leader.name}</h4></Media>
@@ -28,11 +33,15 @@ function About(props) {
                     </Media>
                 </Media>
             </div>
+            </Fade>
+            </Stagger>
+
+            
         )
     }
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
-            <RenderLeader leader={leader}/>
+            <RenderLeader leader={leader} key={leader.id}/>
         );
     });
     return (
